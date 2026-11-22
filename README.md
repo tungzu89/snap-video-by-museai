@@ -15,8 +15,9 @@ chỉ tải video công khai.
 
 ### Cách dùng
 
-1. Tải gói này về (Code → Download ZIP) hoặc gửi file ZIP cho Muse của bạn.
-2. Nhắn: "Cài skill này rồi dựng Snap video by Monz cho tao."
+1. Chỉ cần gửi link repo này cho Muse của bạn — không cần tải file gì cả
+   (trên điện thoại GitHub cũng không hiện nút tải ZIP).
+2. Nhắn: "Đọc skill trong link này rồi dựng Snap video by Monz cho tao."
 3. Muse sẽ tự dựng một Không gian (Space) riêng trong tài khoản của bạn,
    kiểm chứng bằng link thật, rồi giao cho bạn dùng.
 
@@ -39,8 +40,9 @@ public videos only.
 
 ### How to use
 
-1. Download this package (Code → Download ZIP) or attach the ZIP file to your Muse.
-2. Say: "Install this skill and build Snap video by Monz for me."
+1. Just send your Muse the link to this repo — no file download needed
+   (GitHub's mobile site doesn't even show a ZIP download button).
+2. Say: "Read the skill in this link and build Snap video by Monz for me."
 3. Your Muse builds a dedicated Space inside your own account, verifies it
    against a real public link, and hands it over ready to use.
 
