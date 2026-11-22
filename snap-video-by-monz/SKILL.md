@@ -66,6 +66,20 @@ Khi người dùng gửi gói ZIP này và yêu cầu cài/dựng Snap video by 
   format đã chọn, dung lượng, thời gian) lưu vào cơ sở dữ liệu của Space để hiện
   trong mục "Đã snap".
 
+## Luật cứng về môi trường chạy và báo lỗi (rút ra từ sự cố thật)
+
+- **yt-dlp có thể biến mất khỏi môi trường chạy của Space** — đã xảy ra thật:
+  resolve chết với MỌI link dù link hoàn toàn tốt. Đường resolve/tải phải tự
+  kiểm tra yt-dlp có chạy được không trước khi dùng; nếu thiếu thì fallback
+  sang module Python của yt-dlp, thiếu nữa thì tự cài lại rồi mới chạy tiếp —
+  không được chết im lặng.
+- **Báo lỗi phải nói đúng lý do thật**, theo ngôn ngữ người dùng đang chọn:
+  thiếu công cụ, link hỏng/không tồn tại, video riêng tư, bị nền tảng chặn,
+  quá thời gian xử lý là các lỗi khác nhau và phải hiện khác nhau. TUYỆT ĐỐI
+  không giấu lỗi thật rồi thay bằng một câu chung chung kiểu "Không bóc được
+  video. Kiểm tra lại link rồi thử lại nhé." — người dùng đã từng bị câu đó
+  đánh lừa, tưởng link hỏng trong khi lỗi nằm ở máy chủ.
+
 ## Luật cứng về định dạng — chuẩn iPhone (quan trọng nhất)
 
 Đây là bài học đã trả giá bằng lỗi thật, không được bỏ qua:
@@ -114,6 +128,9 @@ Khi người dùng gửi gói ZIP này và yêu cầu cài/dựng Snap video by 
       tiêu đề video (không phải chuỗi mã hoá).
 - [ ] Giao diện đúng nguyên văn các dòng chữ ở mục Giao diện, không thừa dòng
       hướng dẫn dưới "Đã snap", không tràn ngang trên mobile.
+- [ ] Báo lỗi phân biệt được nguyên nhân: một link hỏng phải cho thông báo
+      khác với lỗi thiếu công cụ hay quá giờ — không phải lỗi nào cũng là
+      một câu chung chung.
 - [ ] Dán thử một link Douyin: bị từ chối ngay với thông báo rõ ràng theo
       đúng ngôn ngữ đang chọn, không phải lỗi yt-dlp khó hiểu.
 - [ ] Mục chọn ngôn ngữ ở dưới cùng trang hoạt động: chuyển sang English thì
@@ -199,6 +216,21 @@ The UI defaults to Vietnamese; keep these strings verbatim for the Vietnamese UI
   title, thumbnail, chosen format, size, timestamp) in the Space's database
   for the "Đã snap" history.
 
+## Hard rules on runtime environment and error reporting (from a real incident)
+
+- **yt-dlp can disappear from the Space's runtime environment** — this really
+  happened: resolving failed for EVERY link even though the links were fine.
+  The resolve/download path must check that yt-dlp actually runs before using
+  it; if it is missing, fall back to the yt-dlp Python module, and if that is
+  missing too, reinstall yt-dlp before continuing — never die silently.
+- **Error messages must state the real reason**, in the user's selected
+  language: missing tool, broken/nonexistent link, private video, platform
+  block, and processing timeout are different failures and must read
+  differently. NEVER hide the real error behind one generic line like
+  "Could not extract the video. Check the link and try again." — that exact
+  line once fooled the user into thinking their link was broken when the
+  fault was on the server.
+
 ## Hard format rules — iPhone-ready output (most important)
 
 Lessons paid for with real bugs; do not skip them:
@@ -247,6 +279,8 @@ Lessons paid for with real bugs; do not skip them:
       title-based `.mp4` name (not an encoded string).
 - [ ] UI copy matches the spec verbatim, no extra guidance line under
       "Đã snap", no horizontal overflow on mobile.
+- [ ] Error messages distinguish causes: a broken link must read differently
+      from a missing-tool or timeout failure — not one generic line for all.
 - [ ] Paste a Douyin link: it is rejected immediately with a clear message
       in the selected language, not a cryptic yt-dlp error.
 - [ ] The language selector at the bottom works: switching to English turns
