@@ -22,8 +22,7 @@ chỉ tải video công khai.
 
 ### Lưu ý
 
-- Gói này không chứa dữ liệu cá nhân, lịch sử tải hay tài khoản của người gửi.
-  Bản của bạn bắt đầu với lịch sử trống và chạy bằng tài khoản Muse của bạn.
+- Bản của bạn bắt đầu với lịch sử trống và chạy bằng tài khoản Muse của bạn.
 - Clip ngắn kiểu TikTok/Douyin chạy tốt nhất; video dài ở chất lượng cao
   có thể phải hạ chất lượng xuống.
 
@@ -47,8 +46,6 @@ public videos only.
 
 ### Notes
 
-- This package contains no personal data, download history, or accounts from
-  the sender. Your copy starts with an empty history and runs under your own
-  Muse account.
+- Your copy starts with an empty history and runs under your own Muse account.
 - Short clips (TikTok/Douyin style) work best; long videos at high quality
   may need a lower quality setting.
