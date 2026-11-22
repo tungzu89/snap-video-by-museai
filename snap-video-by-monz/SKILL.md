@@ -1,9 +1,9 @@
 ---
 name: snap_video_by_monz
-description: Dựng một Không gian (Space) tải video tên "Snap video by Monz" trong Muse của chính người dùng — dán link TikTok, Douyin, YouTube, Facebook, Bilibili, Instagram hoặc X là bóc được video gốc sạch watermark, chọn chất lượng tới 4K, tải về dạng MP4 chuẩn H.264 + AAC để iPhone lưu thẳng vào thư viện Ảnh. Backend yt-dlp + ffmpeg chạy trên máy chủ của Space, tối đa 80MB mỗi video, chỉ tải video công khai. Dùng khi người dùng yêu cầu cài / dựng lại tool Snap video by Monz từ gói này.
+description: Dựng một Không gian (Space) tải video tên "Snap video by Monz" trong Muse của chính người dùng — dán link TikTok, Douyin, YouTube, Facebook, Bilibili, Instagram hoặc X là bóc được video gốc sạch watermark, chọn chất lượng tới 4K, tải về dạng MP4 chuẩn H.264 + AAC để iPhone lưu thẳng vào thư viện Ảnh. Backend yt-dlp + ffmpeg chạy trên máy chủ của Space, tối đa 80MB mỗi video, chỉ tải video công khai. Dùng khi người dùng yêu cầu cài / dựng lại tool Snap video by Monz từ gói này. / Build a video-downloader Space named "Snap video by Monz" in the user's own Muse — paste a TikTok, Douyin, YouTube, Facebook, Bilibili, Instagram, or X link to extract the original watermark-free video, with quality options up to 4K, delivered as an iPhone-ready MP4 (H.264 + AAC) that saves straight to the Photos library. Server-side yt-dlp + ffmpeg backend, 80MB max per video, public videos only. Use when the user asks to install or rebuild the Snap video by Monz tool from this package. (Full English specification at the end of this file.)
 ---
 
-# Snap video by Monz — Tool tải video từ link
+# Snap video by Monz — Tool tải video từ link / Video Link Downloader
 
 ## Mục đích
 
@@ -114,3 +114,121 @@ Khi người dùng gửi gói ZIP này và yêu cầu cài/dựng Snap video by 
 Gói này chỉ chứa bản đặc tả dựng tool. Không chứa dữ liệu cá nhân, lịch sử tải,
 link đã snap, tài khoản, mật khẩu hay token của bất kỳ ai. Bản dựng từ gói này
 luôn bắt đầu với lịch sử trống trong Muse của người cài.
+
+---
+
+# ENGLISH SPECIFICATION
+
+## Purpose
+
+The user pastes a video link from TikTok, Douyin, YouTube, Facebook, Bilibili,
+Instagram, or X → the tool extracts the original **watermark-free** video, lets
+them pick a quality, downloads it as a previewable MP4, and keeps it in a
+"Đã snap" (Snapped) history for later re-download.
+
+The tool lives as a **fullstack Space** inside the user's own Muse (with its
+own server backend and database). Everyone who installs this package gets their
+own copy, with an empty history, running under their own Muse account.
+
+## What the receiving Muse must do
+
+When the user shares this package and asks to install / build Snap video by Monz:
+
+1. Create a new **fullstack** web artifact:
+   - Display name, exactly: `Snap video by Monz`
+   - Suggested slug: `snap-video-by-monz`
+   - Declare public web read; no connectors are needed.
+2. Build the UI, features, and hard rules below — exactly.
+3. Verify against a real public link (see Verification) before handing over.
+
+## UI (exact copy)
+
+The UI language is Vietnamese; keep these strings verbatim:
+
+- Big title: **Snap video** (bold black) + **by Monz** (red), on one line.
+- Intro line: `Dán link là bóc ra video gốc — sạch watermark, chọn được chất lượng cao nhất.`
+  ("Paste a link to extract the original video — watermark-free, with the highest quality options.")
+- Platform chips: `TikTok` `Douyin` `YouTube` `Facebook` `Bilibili` `Instagram` `X`
+- Link input placeholder: `Dán link TikTok, Douyin, YouTube, Facebook, Bilibili...`
+- Buttons: `Dán link` ("Paste link", from clipboard) and a red `SNAP →` button.
+- After resolving: a result card with thumbnail, title, uploader, duration,
+  and a radio list of quality options to pick before downloading.
+- History section, heading: `Đã snap`
+  - Empty state: `Chưa snap video nào. Dán link đầu tiên ở trên đi.`
+  - Each item: thumbnail, title, file size, and `Lưu MP4` (Save MP4),
+    `Tải lại` (Re-download), `Xoá` (Delete) buttons.
+  - **Do NOT add any guidance/note line under the "Đã snap" heading.**
+- Footer: `Chạy bằng yt-dlp + ffmpeg · tối đa 80MB mỗi video · chỉ tải video công khai.`
+  ("Powered by yt-dlp + ffmpeg · 80MB max per video · public videos only.")
+- Mobile-first (iPhone), no horizontal overflow.
+
+## Backend
+
+- Use **yt-dlp** to resolve links: title, uploader, thumbnail, duration, and
+  the format list (lowest to highest, up to 4K when the source offers it).
+- Use **yt-dlp + ffmpeg** to download the chosen format; when the source serves
+  video and audio separately, ffmpeg merges them into a single MP4.
+- Hard cap: **80MB per video** — formats above the cap are not selectable, or
+  are flagged clearly before downloading.
+- **Public videos only.** Private, login-gated, or region-locked videos that
+  yt-dlp cannot fetch must produce a clear error — never attempt to bypass.
+- Store video files in the Space's blob storage; store metadata (source URL,
+  title, thumbnail, chosen format, size, timestamp) in the Space's database
+  for the "Đã snap" history.
+
+## Hard format rules — iPhone-ready output (most important)
+
+Lessons paid for with real bugs; do not skip them:
+
+1. **Prefer H.264 when picking formats:** prefer video codec `avc1` (H.264)
+   with AAC audio in the quality list.
+2. **Always probe the downloaded file with ffprobe.** If the video is not
+   H.264 or the audio is not AAC (very common: YouTube serves **AV1** or VP9
+   inside an MP4 container at 1080p+), **transcode to H.264 + AAC** with ffmpeg
+   (`libx264`, `yuv420p`, `aac`, `+faststart`) before storing.
+   - Why: an AV1/VP9 file in an .mp4 wrapper still looks like "MP4", but
+     **iPhones cannot decode it** — tapping "Save Video" in the share sheet
+     silently saves nothing, with a blank preview and no error.
+   - A transcoded H.264 file will be larger than the AV1 original. That is normal.
+3. The **Save MP4** button must NEVER be a plain anchor to the blob URL: blob
+   URLs carry an encoded name, so iOS receives the file as generic "data" that
+   cannot be opened or saved. Correct approach:
+   - `fetch` the blob → wrap it in a `File` named `<title-slug>.mp4`,
+     `type: "video/mp4"`.
+   - If file sharing is supported (`navigator.canShare({ files })`), open
+     `navigator.share({ files })` — on iOS the user picks **"Save Video"**
+     and the video lands in the Photos library.
+   - Otherwise fall back to a normal object-URL download.
+   - Errors and user cancellations must be reflected in the button's state.
+4. The **Re-download** button on each history item re-resolves and re-downloads
+   from the source URL, re-applies all format rules above, and **replaces**
+   that item's stored file (this rescues older files with the wrong codec).
+
+## Platform limits to know
+
+- Each Space action has a budget of roughly **30 seconds**: resolving is light,
+  but download + merge + transcode must finish inside that budget. Short
+  TikTok/Douyin-style clips are the primary use case and work well; long,
+  high-quality videos may time out and save nothing.
+- When a long video times out, advise a lower quality or a shorter video —
+  and state plainly that this is the Space's per-action limit, not a
+  TikTok/YouTube limit.
+
+## Verification (mandatory before hand-over)
+
+- [ ] Resolve a real public YouTube link: correct title, thumbnail, duration,
+      and quality list.
+- [ ] Download a short clip end to end: download + merge + store + appears in "Đã snap".
+- [ ] ffprobe the result: video = `h264`, audio = `aac`.
+- [ ] Test the "Lưu MP4" button: the shared/downloaded file has a proper
+      title-based `.mp4` name (not an encoded string).
+- [ ] UI copy matches the spec verbatim, no extra guidance line under
+      "Đã snap", no horizontal overflow on mobile.
+- [ ] History starts empty — no sample data, nobody else's data.
+
+## Privacy
+
+This package contains only the build specification. It contains no personal
+data, download history, snapped links, accounts, passwords, or tokens.
+Any build from this package starts with an empty history inside the
+installer's own Muse.
