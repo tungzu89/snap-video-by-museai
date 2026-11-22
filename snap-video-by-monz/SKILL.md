@@ -1,13 +1,13 @@
 ---
 name: snap_video_by_monz
-description: Dựng một Không gian (Space) tải video tên "Snap video by Monz" trong Muse của chính người dùng — dán link TikTok, Douyin, YouTube, Facebook, Bilibili, Instagram hoặc X là bóc được video gốc sạch watermark, chọn chất lượng tới 4K, tải về dạng MP4 chuẩn H.264 + AAC để iPhone lưu thẳng vào thư viện Ảnh. Backend yt-dlp + ffmpeg chạy trên máy chủ của Space, tối đa 80MB mỗi video, chỉ tải video công khai. Dùng khi người dùng yêu cầu cài / dựng lại tool Snap video by Monz từ gói này. / Build a video-downloader Space named "Snap video by Monz" in the user's own Muse — paste a TikTok, Douyin, YouTube, Facebook, Bilibili, Instagram, or X link to extract the original watermark-free video, with quality options up to 4K, delivered as an iPhone-ready MP4 (H.264 + AAC) that saves straight to the Photos library. Server-side yt-dlp + ffmpeg backend, 80MB max per video, public videos only. Use when the user asks to install or rebuild the Snap video by Monz tool from this package. (Full English specification at the end of this file.)
+description: Dựng một Không gian (Space) tải video tên "Snap video by Monz" trong Muse của chính người dùng — dán link TikTok, YouTube, Facebook, Bilibili, Instagram hoặc X là bóc được video gốc sạch watermark, chọn chất lượng tới 4K, tải về dạng MP4 chuẩn H.264 + AAC để iPhone lưu thẳng vào thư viện Ảnh. Backend yt-dlp + ffmpeg chạy trên máy chủ của Space, tối đa 80MB mỗi video, chỉ tải video công khai. Dùng khi người dùng yêu cầu cài / dựng lại tool Snap video by Monz từ gói này. / Build a video-downloader Space named "Snap video by Monz" in the user's own Muse — paste a TikTok, YouTube, Facebook, Bilibili, Instagram, or X link to extract the original watermark-free video, with quality options up to 4K, delivered as an iPhone-ready MP4 (H.264 + AAC) that saves straight to the Photos library. Server-side yt-dlp + ffmpeg backend, 80MB max per video, public videos only. Use when the user asks to install or rebuild the Snap video by Monz tool from this package. (Full English specification at the end of this file.)
 ---
 
 # Snap video by Monz — Tool tải video từ link / Video Link Downloader
 
 ## Mục đích
 
-Người dùng dán link video từ TikTok, Douyin, YouTube, Facebook, Bilibili, Instagram
+Người dùng dán link video từ TikTok, YouTube, Facebook, Bilibili, Instagram
 hoặc X → tool bóc ra video gốc **sạch watermark**, cho chọn chất lượng, tải về máy
 dạng MP4 xem trước được ngay, và lưu lại vào lịch sử "Đã snap" để tải lại sau.
 
@@ -31,9 +31,9 @@ Khi người dùng gửi gói ZIP này và yêu cầu cài/dựng Snap video by 
 - Tiêu đề lớn: **Snap video** (chữ đen đậm) + **by Monz** (chữ đỏ) trên cùng một dòng.
 - Dòng giới thiệu dưới tiêu đề, nguyên văn:
   `Dán link là bóc ra video gốc — sạch watermark, chọn được chất lượng cao nhất.`
-- Hàng chip nền tảng: `TikTok` `Douyin` `YouTube` `Facebook` `Bilibili` `Instagram` `X`
+- Hàng chip nền tảng: `TikTok` `YouTube` `Facebook` `Bilibili` `Instagram` `X`
 - Ô nhập link, placeholder nguyên văn:
-  `Dán link TikTok, Douyin, YouTube, Facebook, Bilibili...`
+  `Dán link TikTok, YouTube, Facebook, Bilibili...`
 - Hai nút cạnh nhau: `Dán link` (dán từ clipboard) và nút đỏ `SNAP →`
 - Sau khi resolve: thẻ kết quả gồm ảnh bìa (thumbnail), tiêu đề, kênh/người đăng,
   thời lượng, và danh sách mức chất lượng dạng radio để chọn trước khi tải.
@@ -43,7 +43,8 @@ Khi người dùng gửi gói ZIP này và yêu cầu cài/dựng Snap video by 
   - **KHÔNG thêm bất kỳ dòng hướng dẫn/ghi chú nào dưới tiêu đề "Đã snap".**
 - Dòng chân trang, nguyên văn:
   `Chạy bằng yt-dlp + ffmpeg · tối đa 80MB mỗi video · chỉ tải video công khai.`
-- Ngôn ngữ giao diện: tiếng Việt. Tối ưu cho iPhone (mobile-first), không tràn ngang.
+- Ngôn ngữ giao diện: mặc định tiếng Việt, và có **mục chọn ngôn ngữ ở dưới cùng trang** gồm hai lựa chọn `Tiếng Việt` và `English` — chọn English thì TOÀN BỘ dòng chữ trên giao diện (cả các dòng nguyên văn ở trên: nút bấm, trạng thái trống, chân trang) hiển thị bản tiếng Anh tương ứng, và thông báo lỗi từ server cũng trả về đúng ngôn ngữ đã chọn. Lựa chọn ngôn ngữ được lưu lại cho lần mở sau.
+- Tối ưu cho iPhone (mobile-first), không tràn ngang.
 
 ## Backend
 
@@ -55,6 +56,12 @@ Khi người dùng gửi gói ZIP này và yêu cầu cài/dựng Snap video by 
   hoặc báo rõ trước khi tải.
 - **Chỉ tải video công khai.** Video riêng tư / cần đăng nhập / bị khoá vùng mà
   yt-dlp không lấy được thì báo lỗi rõ ràng cho người dùng, không tìm cách lách.
+- **Douyin KHÔNG được hỗ trợ:** server kiểm tra link ngay từ đầu — link thuộc
+  douyin.com / v.douyin.com thì từ chối ngay, không gọi yt-dlp, với thông báo
+  theo ngôn ngữ đang chọn (tiếng Việt kiểu "Douyin không còn được hỗ trợ nữa…";
+  English: "Douyin is no longer supported…"). Lý do: Douyin chặn tải từ server
+  bằng cookie tươi và tham số API có chữ ký do JS của nó sinh ra. Mục lịch sử cũ
+  là link Douyin (nếu có từ bản trước) vẫn xem/xoá được, chỉ không tải lại được.
 - File video lưu vào kho blob của Space; metadata (link gốc, tiêu đề, thumbnail,
   format đã chọn, dung lượng, thời gian) lưu vào cơ sở dữ liệu của Space để hiện
   trong mục "Đã snap".
@@ -91,7 +98,7 @@ Khi người dùng gửi gói ZIP này và yêu cầu cài/dựng Snap video by 
 
 - Mỗi lượt xử lý (action) của Space có ngân sách khoảng **30 giây**: resolve thì
   nhẹ, nhưng tải + ghép + chuyển mã phải xong trong ngân sách đó. Hệ quả:
-  clip ngắn kiểu TikTok/Douyin là trường hợp dùng chính và chạy tốt; video dài
+  clip ngắn kiểu TikTok là trường hợp dùng chính và chạy tốt; video dài
   nhiều phút ở chất lượng cao có thể quá giờ và không lưu được gì.
 - Khi người dùng gặp lỗi quá giờ với video dài, hướng xử lý là khuyên chọn mức
   chất lượng thấp hơn hoặc video ngắn hơn — nói thẳng đây là giới hạn của lượt
@@ -107,6 +114,11 @@ Khi người dùng gửi gói ZIP này và yêu cầu cài/dựng Snap video by 
       tiêu đề video (không phải chuỗi mã hoá).
 - [ ] Giao diện đúng nguyên văn các dòng chữ ở mục Giao diện, không thừa dòng
       hướng dẫn dưới "Đã snap", không tràn ngang trên mobile.
+- [ ] Dán thử một link Douyin: bị từ chối ngay với thông báo rõ ràng theo
+      đúng ngôn ngữ đang chọn, không phải lỗi yt-dlp khó hiểu.
+- [ ] Mục chọn ngôn ngữ ở dưới cùng trang hoạt động: chuyển sang English thì
+      toàn bộ giao diện và thông báo lỗi đổi sang tiếng Anh; mở lại trang vẫn
+      giữ nguyên lựa chọn.
 - [ ] Lịch sử bắt đầu trống — không có dữ liệu mẫu hay dữ liệu của người khác.
 
 ## Riêng tư
@@ -121,7 +133,7 @@ luôn bắt đầu với lịch sử trống trong Muse của người cài.
 
 ## Purpose
 
-The user pastes a video link from TikTok, Douyin, YouTube, Facebook, Bilibili,
+The user pastes a video link from TikTok, YouTube, Facebook, Bilibili,
 Instagram, or X → the tool extracts the original **watermark-free** video, lets
 them pick a quality, downloads it as a previewable MP4, and keeps it in a
 "Đã snap" (Snapped) history for later re-download.
@@ -143,13 +155,13 @@ When the user shares this package and asks to install / build Snap video by Monz
 
 ## UI (exact copy)
 
-The UI language is Vietnamese; keep these strings verbatim:
+The UI defaults to Vietnamese; keep these strings verbatim for the Vietnamese UI:
 
 - Big title: **Snap video** (bold black) + **by Monz** (red), on one line.
 - Intro line: `Dán link là bóc ra video gốc — sạch watermark, chọn được chất lượng cao nhất.`
   ("Paste a link to extract the original video — watermark-free, with the highest quality options.")
-- Platform chips: `TikTok` `Douyin` `YouTube` `Facebook` `Bilibili` `Instagram` `X`
-- Link input placeholder: `Dán link TikTok, Douyin, YouTube, Facebook, Bilibili...`
+- Platform chips: `TikTok` `YouTube` `Facebook` `Bilibili` `Instagram` `X`
+- Link input placeholder: `Dán link TikTok, YouTube, Facebook, Bilibili...`
 - Buttons: `Dán link` ("Paste link", from clipboard) and a red `SNAP →` button.
 - After resolving: a result card with thumbnail, title, uploader, duration,
   and a radio list of quality options to pick before downloading.
@@ -160,6 +172,11 @@ The UI language is Vietnamese; keep these strings verbatim:
   - **Do NOT add any guidance/note line under the "Đã snap" heading.**
 - Footer: `Chạy bằng yt-dlp + ffmpeg · tối đa 80MB mỗi video · chỉ tải video công khai.`
   ("Powered by yt-dlp + ffmpeg · 80MB max per video · public videos only.")
+- **Language selector at the very bottom of the page:** two options,
+  `Tiếng Việt` and `English`. Choosing English switches EVERY UI string
+  (including the verbatim strings above — buttons, empty state, footer) to
+  its English equivalent, and server error messages are also returned in the
+  selected language. The choice is persisted for the next visit.
 - Mobile-first (iPhone), no horizontal overflow.
 
 ## Backend
@@ -172,6 +189,12 @@ The UI language is Vietnamese; keep these strings verbatim:
   are flagged clearly before downloading.
 - **Public videos only.** Private, login-gated, or region-locked videos that
   yt-dlp cannot fetch must produce a clear error — never attempt to bypass.
+- **Douyin is NOT supported:** the server checks the link up front —
+  douyin.com / v.douyin.com links are rejected immediately, without calling
+  yt-dlp, with a message in the selected language ("Douyin is no longer
+  supported…"). Reason: Douyin blocks server-side downloads using fresh
+  JS-generated cookies and signed API parameters. Pre-existing Douyin rows
+  in the history remain viewable and deletable but cannot be re-downloaded.
 - Store video files in the Space's blob storage; store metadata (source URL,
   title, thumbnail, chosen format, size, timestamp) in the Space's database
   for the "Đã snap" history.
@@ -208,7 +231,7 @@ Lessons paid for with real bugs; do not skip them:
 
 - Each Space action has a budget of roughly **30 seconds**: resolving is light,
   but download + merge + transcode must finish inside that budget. Short
-  TikTok/Douyin-style clips are the primary use case and work well; long,
+  TikTok-style clips are the primary use case and work well; long,
   high-quality videos may time out and save nothing.
 - When a long video times out, advise a lower quality or a shorter video —
   and state plainly that this is the Space's per-action limit, not a
@@ -224,6 +247,10 @@ Lessons paid for with real bugs; do not skip them:
       title-based `.mp4` name (not an encoded string).
 - [ ] UI copy matches the spec verbatim, no extra guidance line under
       "Đã snap", no horizontal overflow on mobile.
+- [ ] Paste a Douyin link: it is rejected immediately with a clear message
+      in the selected language, not a cryptic yt-dlp error.
+- [ ] The language selector at the bottom works: switching to English turns
+      the whole UI and error messages English, and the choice survives a reload.
 - [ ] History starts empty — no sample data, nobody else's data.
 
 ## Privacy

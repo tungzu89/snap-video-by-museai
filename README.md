@@ -1,7 +1,7 @@
 # Snap video by Monz
 
-**Tải video gốc sạch watermark từ TikTok, Douyin, YouTube, Facebook, Bilibili, Instagram và X.**
-**Download original, watermark-free videos from TikTok, Douyin, YouTube, Facebook, Bilibili, Instagram, and X.**
+**Tải video gốc sạch watermark từ TikTok, YouTube, Facebook, Bilibili, Instagram và X.**
+**Download original, watermark-free videos from TikTok, YouTube, Facebook, Bilibili, Instagram, and X.**
 
 ---
 
@@ -24,8 +24,11 @@ chỉ tải video công khai.
 ### Lưu ý
 
 - Bản của bạn bắt đầu với lịch sử trống và chạy bằng tài khoản Muse của bạn.
-- Clip ngắn kiểu TikTok/Douyin chạy tốt nhất; video dài ở chất lượng cao
+- Clip ngắn kiểu TikTok chạy tốt nhất; video dài ở chất lượng cao
   có thể phải hạ chất lượng xuống.
+- Douyin không còn được hỗ trợ — nền tảng này chặn tải từ server,
+  tool sẽ báo rõ khi gặp link Douyin.
+- Tool có mục chọn ngôn ngữ Tiếng Việt / English ở dưới cùng trang.
 
 ---
 
@@ -49,5 +52,8 @@ public videos only.
 ### Notes
 
 - Your copy starts with an empty history and runs under your own Muse account.
-- Short clips (TikTok/Douyin style) work best; long videos at high quality
+- Short clips (TikTok style) work best; long videos at high quality
   may need a lower quality setting.
+- Douyin is no longer supported — it blocks server-side downloads,
+  and the tool says so clearly when it sees a Douyin link.
+- The tool includes a Tiếng Việt / English language switch at the bottom of the page.
